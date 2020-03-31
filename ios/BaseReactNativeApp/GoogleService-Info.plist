@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>841860958822-tvljlq4bemhommmjc1dfi4sp1agih5ev.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.841860958822-tvljlq4bemhommmjc1dfi4sp1agih5ev</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCJ9P9mfc1jVCjX4XNiGbjD7-VadHu0bLw</string>
+	<key>GCM_SENDER_ID</key>
+	<string>841860958822</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>vn.com.irtech.mobile.giaybq</string>
+	<key>PROJECT_ID</key>
+	<string>bqshoes-app001</string>
+	<key>STORAGE_BUCKET</key>
+	<string>bqshoes-app001.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:841860958822:ios:b49394adea0b3e0a0f3ba7</string>
+	<key>DATABASE_URL</key>
+	<string>https://bqshoes-app001.firebaseio.com</string>
+</dict>
+</plist>

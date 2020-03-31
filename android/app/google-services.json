@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "841860958822",
+    "firebase_url": "https://bqshoes-app001.firebaseio.com",
+    "project_id": "bqshoes-app001",
+    "storage_bucket": "bqshoes-app001.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:841860958822:android:1d844e1416ed53050f3ba7",
+        "android_client_info": {
+          "package_name": "vn.com.giaybq"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "841860958822-nscb7d7j3j6lr9rs54u1j8jgdvh026of.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAucx3JLyu8B62gExDyBlMUURL3OCnPSX0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "841860958822-nscb7d7j3j6lr9rs54u1j8jgdvh026of.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
