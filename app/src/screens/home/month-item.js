@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
   name: {
     textAlign: 'center',
     fontFamily: font.bold,
-    fontWeight: 'bold',
   },
   content: {
     padding: sizeWidth(6),

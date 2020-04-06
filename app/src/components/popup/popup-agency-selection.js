@@ -41,7 +41,6 @@ const styles = StyleSheet.create({
   headerText: {
     textTransform: 'uppercase',
     fontFamily: font.bold,
-    fontWeight: 'bold',
     fontSize: sizeFont(15),
   },
   selection: {

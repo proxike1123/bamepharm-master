@@ -17,7 +17,7 @@ class Button extends React.PureComponent {
 
     return (
       <LinearGradient
-        colors={['#F98649', '#F04E23']}
+        colors={[appColor.leftLinear, appColor.rightLinear]}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
         style={[styleBase.shadow, styles.container, style]}>
@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
   text: {
     color: '#FFFFFF',
     fontFamily: font.bold,
-    fontWeight: 'bold',
     fontSize: sizeFont(14),
   },
 });

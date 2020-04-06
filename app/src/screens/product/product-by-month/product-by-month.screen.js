@@ -109,7 +109,7 @@ class ProductByMonthScreen extends Component {
     return (
       <View style={styles.container}>
         <ProductToolbar
-          title={`Sản phẩm tháng ${params.month}/${params.year}`}
+          title={`Sản phẩm tháng ${params.month} ${params.year}`}
         />
         {loading ? (
           <LoadingIndicator />
@@ -178,7 +178,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: sizeFont(18),
     fontFamily: font.bold,
-    fontWeight: 'bold',
   },
   label: {
     fontSize: sizeFont(13),
@@ -229,11 +228,9 @@ const styles = StyleSheet.create({
   name: {
     color: appColor.blur,
     fontFamily: font.medium,
-    fontWeight: '500',
   },
   activeText: {
     fontFamily: font.bold,
-    fontWeight: 'bold',
   },
   line: {
     position: 'absolute',

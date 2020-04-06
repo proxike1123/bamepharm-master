@@ -1,8 +1,8 @@
-import React, {Component, ReactNode} from 'react';
-import {View, StyleSheet, TextInput} from 'react-native';
-import {sizeWidth, sizeFont} from '../../helpers/size.helper';
-import {font} from '../../constants/app.constant';
-import Text from './text';
+import React, { Component, ReactNode } from "react";
+import { View, StyleSheet, TextInput } from "react-native";
+import { sizeWidth, sizeFont } from "../../helpers/size.helper";
+import { font } from "../../constants/app.constant";
+import Text from "./text";
 
 export default class AmountInput extends Component {
   render(): ReactNode {
@@ -12,7 +12,7 @@ export default class AmountInput extends Component {
       onChangeText,
       secureTextEntry,
       label,
-      unit,
+      unit
     } = this.props;
     return (
       <View style={[styles.container, style]}>
@@ -39,33 +39,32 @@ export default class AmountInput extends Component {
 const styles = StyleSheet.create({
   container: {
     width: sizeWidth(290),
-    backgroundColor: 'white',
-    marginVertical: sizeWidth(6),
+    backgroundColor: "white",
+    marginVertical: sizeWidth(6)
   },
   body: {
-    alignItems: 'center',
-    flexDirection: 'row',
+    alignItems: "center",
+    flexDirection: "row",
     borderWidth: 1,
-    borderColor: '#A0B1B7',
+    borderColor: "#A0B1B7",
     height: sizeWidth(34),
     borderRadius: sizeWidth(6),
     paddingHorizontal: sizeWidth(8),
-    marginTop: sizeWidth(4),
+    marginTop: sizeWidth(4)
   },
   unit: {
     fontSize: sizeFont(12),
-    marginLeft: sizeWidth(12),
+    marginLeft: sizeWidth(12)
   },
   label: {
-    fontFamily: font.medium,
-    fontWeight: '500',
+    fontFamily: font.medium
   },
   input: {
     fontSize: sizeWidth(12),
     flex: 1,
-    textAlign: 'left',
-    color: '#444444',
+    textAlign: "left",
+    color: "#444444",
     padding: 0,
-    fontFamily: font.regular,
-  },
+    fontFamily: font.regular
+  }
 });

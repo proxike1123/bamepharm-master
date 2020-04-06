@@ -24,7 +24,6 @@ import SaleInfoScreen from '../screens/account/sale-info.screen';
 import OrderDetailScreen from 'app/src/screens/orderDetail/order-detail.screen';
 import NotFoundProductScreen from 'app/src/screens/barcode/not-found-product.screen';
 import WebViewPreview from 'app/src/components/webview';
-import DetailListScreen from '../screens/orderDetail/detail-list.screen';
 
 const stackNavigatorOptions = {
   headerMode: 'none',
@@ -58,7 +57,6 @@ export const AppNavigator = createStackNavigator(
     NotificationDetail: {screen: NotificationDetailScreen},
     SaleInfo: {screen: SaleInfoScreen},
     OrderDetail: {screen: OrderDetailScreen},
-    DetailList: {screen: DetailListScreen},
     NotFoundProduct: {screen: NotFoundProductScreen},
     WebViewPreview: {screen: WebViewPreview},
     ProductImage: {screen: ProductImageScreen},

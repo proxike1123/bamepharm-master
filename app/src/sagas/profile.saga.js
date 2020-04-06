@@ -1,4 +1,4 @@
-import { put, takeLatest, call, all } from "redux-saga/effects";
+import { put, takeLatest, call, all, fork } from "redux-saga/effects";
 // import Matomo from "react-native-matomo";
 import Api from "../api/api";
 import {

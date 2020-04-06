@@ -20,7 +20,7 @@ export const MainNavigator = createBottomTabNavigator(
         tabBarIcon: ({focused}) => (
           <BottomTabIcon
             focused={focused}
-            source={require('../../res/icon/ic_home.png')}
+            source={require('../../res/icon/product.png')}
           />
         ),
         tabBarLabel: 'Sản phẩm',
@@ -94,7 +94,6 @@ export const MainNavigator = createBottomTabNavigator(
       labelStyle: {
         fontSize: sizeFont(12),
         fontFamily: font.medium,
-        fontWeight: '500',
       },
       style: {
         borderTopWidth: 0,

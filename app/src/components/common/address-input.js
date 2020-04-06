@@ -1,14 +1,14 @@
-import React, {Component, ReactNode} from 'react';
+import React, { Component, ReactNode } from "react";
 import {
   View,
   StyleSheet,
   Image,
   TouchableOpacity,
-  TextInput,
-} from 'react-native';
-import {sizeWidth, sizeFont} from '../../helpers/size.helper';
-import {font} from '../../constants/app.constant';
-import Text from './text';
+  TextInput
+} from "react-native";
+import { sizeWidth, sizeFont } from "../../helpers/size.helper";
+import { font } from "../../constants/app.constant";
+import Text from "./text";
 
 export default class AddressInput extends Component {
   render(): ReactNode {
@@ -22,7 +22,7 @@ export default class AddressInput extends Component {
       valid,
       editable,
       copyable,
-      warning,
+      warning
     } = this.props;
     return (
       <View style={[styles.container, style]}>
@@ -42,20 +42,20 @@ export default class AddressInput extends Component {
           {copyable && (
             <TouchableOpacity>
               <Image
-                source={require('../../../res/icon/copy-content.png')}
+                source={require("../../../res/icon/copy-content.png")}
                 style={styles.copy}
               />
             </TouchableOpacity>
           )}
           {valid && (
             <Image
-              source={require('../../../res/icon/check-circle.png')}
+              source={require("../../../res/icon/check-circle.png")}
               style={styles.tick}
             />
           )}
           {warning && (
             <Image
-              source={require('../../../res/icon/warning.png')}
+              source={require("../../../res/icon/warning.png")}
               style={styles.warning}
             />
           )}
@@ -68,42 +68,41 @@ export default class AddressInput extends Component {
 const styles = StyleSheet.create({
   container: {
     width: sizeWidth(290),
-    alignSelf: 'center',
-    backgroundColor: 'white',
-    marginVertical: sizeWidth(6),
+    alignSelf: "center",
+    backgroundColor: "white",
+    marginVertical: sizeWidth(6)
   },
   body: {
-    alignItems: 'center',
-    flexDirection: 'row',
+    alignItems: "center",
+    flexDirection: "row",
     borderWidth: 1,
-    borderColor: '#A0B1B7',
+    borderColor: "#A0B1B7",
     height: sizeWidth(34),
     borderRadius: sizeWidth(6),
     paddingHorizontal: sizeWidth(8),
-    marginTop: sizeWidth(4),
+    marginTop: sizeWidth(4)
   },
   tick: {
     width: sizeWidth(15),
-    height: sizeWidth(15),
+    height: sizeWidth(15)
   },
   label: {
-    fontFamily: font.medium,
-    fontWeight: '500',
+    fontFamily: font.medium
   },
   input: {
     fontSize: sizeWidth(12),
     flex: 1,
-    textAlign: 'left',
-    color: '#444444',
+    textAlign: "left",
+    color: "#444444",
     padding: 0,
-    fontFamily: font.regular,
+    fontFamily: font.regular
   },
   copy: {
     width: sizeWidth(15),
-    height: sizeWidth(17),
+    height: sizeWidth(17)
   },
   warning: {
     width: sizeWidth(16),
-    height: sizeWidth(16),
-  },
+    height: sizeWidth(16)
+  }
 });

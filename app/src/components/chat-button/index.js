@@ -7,6 +7,7 @@ import {sizeWidth} from 'app/src/helpers/size.helper';
 import {connect} from 'react-redux';
 import {navigateToPage} from 'app/src/actions/nav.action';
 import LinearGradient from 'react-native-linear-gradient';
+import {appColor} from '../../constants/app.constant';
 
 class ChatButton extends React.PureComponent {
   constructor(props) {
@@ -24,7 +25,7 @@ class ChatButton extends React.PureComponent {
   render() {
     return (
       <LinearGradient
-        colors={['#F98649', '#F04E23']}
+        colors={[appColor.leftLinear, appColor.rightLinear]}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
         style={[

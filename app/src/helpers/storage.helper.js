@@ -1,4 +1,4 @@
-import {AsyncStorage} from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const FCM_TOKEN = 'fcm_token';
 const KEY_PROFILE = 'profile';

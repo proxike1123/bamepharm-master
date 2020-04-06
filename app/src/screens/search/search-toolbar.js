@@ -46,7 +46,7 @@ class SearchToolbar extends Component {
   render() {
     return (
       <LinearGradient
-        colors={['#F98649', '#F04E23']}
+        colors={[appColor.leftLinear, appColor.rightLinear]}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
         style={styles.container}>

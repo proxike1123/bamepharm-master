@@ -9,6 +9,7 @@ import {navigateToPage} from 'app/src/actions/nav.action';
 import LinearGradient from 'react-native-linear-gradient';
 import Communications from 'react-native-communications';
 import API from 'app/src/api/api';
+import {appColor} from '../../constants/app.constant';
 
 class PhoneButton extends React.PureComponent {
   constructor(props) {
@@ -26,7 +27,7 @@ class PhoneButton extends React.PureComponent {
     const {phone} = this.props;
     return (
       <LinearGradient
-        colors={['#F98649', '#F04E23']}
+        colors={[appColor.leftLinear, appColor.rightLinear]}
         start={{x: 0, y: 0}}
         end={{x: 1, y: 1}}
         style={[

@@ -15,7 +15,6 @@ import Toolbar from '../../components/common/toolbar';
 import BackIcon from '../../components/common/back-icon';
 import lodash from 'lodash';
 import numeral from 'numeral';
-import moment from 'moment';
 import {getSelectedAgency, removeCart} from '../../helpers/storage.helper';
 import {loadCart} from '../../actions/cart.action';
 import EmptyView from '../../components/common/empty-view';
@@ -94,18 +93,9 @@ class CartScreen extends Component {
             <EmptyView message="Bạn chưa có sản phẩm nào trong giỏ hàng" />
             <Button
               onPress={() => {
-                const month = {
-                  title: `Tháng ${moment().get('months') + 1}/${moment().get(
-                    'years',
-                  )}`,
-                  month: moment().get('months') + 1,
-                  year: moment().get('years'),
-                };
-                this.props.navigateBack();
-                this.props.navigateToPage('ProductByMonth', {month});
+                this.props.navigateToPage('OrderList');
               }}
-              text={`Xem sản phẩm bán chạy tháng ${moment().get('months') +
-                1}/${moment().get('years')}`}
+              text="Xem đơn hàng"
             />
           </View>
         ) : (
@@ -241,14 +231,9 @@ class CartScreen extends Component {
       this.props.loadCart([]);
       Toast.show(
         'Quý khách đã đặt hàng thành công. Nhân viên công ty sẽ liên hệ để xác nhận đơn hàng trong giây lát.',
-        {
-          duration: Toast.durations.LONG,
-        },
       );
       this.props.navigateBack();
-    } catch (e) {
-      Toast.show('Đặt hàng thất bại. Vui lòng thử lại sau.');
-    }
+    } catch (e) {}
 
     this.setState({loading: false});
   };
@@ -326,7 +311,6 @@ const styles = StyleSheet.create({
   },
   label: {
     fontFamily: font.bold,
-    fontWeight: 'bold',
   },
   input_container: {
     borderWidth: 1,
@@ -341,7 +325,6 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
     fontSize: sizeFont(15),
     fontFamily: font.medium,
-    fontWeight: '500',
     height: sizeWidth(120),
     paddingVertical: 0,
   },

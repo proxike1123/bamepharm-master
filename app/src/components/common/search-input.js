@@ -10,6 +10,7 @@ import {
 import {font} from '../../constants/app.constant';
 import {sizeFont, sizeWidth} from '../../helpers/size.helper';
 import Text from './text';
+import {appColor} from '../../constants/app.constant';
 
 export default class SearchInput extends Component {
   render(): ReactNode {
@@ -21,8 +22,7 @@ export default class SearchInput extends Component {
       value,
       autoFocus,
       onChangeText,
-      onSubmitEditing,
-      hideBarcode,
+      onSubmitEditing
     } = this.props;
     const Root = onPress ? TouchableOpacity : View;
     return (
@@ -32,7 +32,7 @@ export default class SearchInput extends Component {
             resizeMode="stretch"
             resizeMethod="resize"
             source={require('../../../res/icon/search.png')}
-            style={styles.leftImage}
+            style={[styles.leftImage, {tintColor: appColor.leftLinear}]}
           />
 
           {onPress ? (
@@ -53,16 +53,15 @@ export default class SearchInput extends Component {
               style={styles.input}
             />
           )}
-          {!hideBarcode && (
-            <TouchableOpacity onPress={onIconPress}>
-              <Image
-                resizeMode="stretch"
-                resizeMethod="resize"
-                source={require('../../../res/icon/barcode_round.png')}
-                style={styles.image}
-              />
-            </TouchableOpacity>
-          )}
+
+          <TouchableOpacity onPress={onIconPress}>
+            <Image
+              resizeMode="stretch"
+              resizeMethod="resize"
+              source={require('../../../res/icon/barcode_round.png')}
+              style={[styles.image, {tintColor: appColor.rightLinear}]}
+            />
+          </TouchableOpacity>
         </View>
       </Root>
     );
@@ -72,13 +71,13 @@ export default class SearchInput extends Component {
 SearchInput.propTypes = {
   autoFocus: PropTypes.bool,
   onChangeText: PropTypes.func,
-  onSubmitEditing: PropTypes.func,
+  onSubmitEditing: PropTypes.func
 };
 
 SearchInput.defaultProps = {
   autoFocus: false,
   onChangeText: () => {},
-  onSubmitEditing: () => {},
+  onSubmitEditing: () => {}
 };
 
 const styles = StyleSheet.create({

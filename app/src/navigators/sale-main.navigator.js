@@ -19,7 +19,7 @@ export const SaleMainNavigator = createBottomTabNavigator(
         tabBarIcon: ({focused}) => (
           <BottomTabIcon
             focused={focused}
-            source={require('../../res/icon/ic_home.png')}
+            source={require('../../res/icon/product.png')}
           />
         ),
         tabBarLabel: 'Sản phẩm',

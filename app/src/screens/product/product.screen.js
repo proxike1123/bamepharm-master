@@ -27,7 +27,6 @@ import {accountType, appColor, font} from '../../constants/app.constant';
 import {sizeFont, sizeHeight, sizeWidth} from '../../helpers/size.helper';
 import {imageFullpath} from '../../helpers/url.helper';
 import ProductToolbar from './product-detail-toolbar';
-import AnalyticsHelper, {analyticsEvents} from '../../helpers/analytics.helper';
 
 class ProductScreen extends Component {
   constructor(props) {
@@ -54,10 +53,6 @@ class ProductScreen extends Component {
     try {
       const {profile} = this.props.profile;
       const {product} = this.props.navigation.state.params;
-      AnalyticsHelper.logEvent(analyticsEvents.viewScreen, {
-        screenName: 'product_detail',
-        ...product,
-      });
       const data = await Api.productInfo(product.id, profile.type);
       this.setState({
         data,
@@ -82,7 +77,6 @@ class ProductScreen extends Component {
     }
 
     let images = Object.values(lodash.get(data, 'sub_images', {}));
-    console.log(data);
     if (product && product.image && images.length === 0) {
       images = [product.image, ...images];
     }
@@ -147,6 +141,9 @@ class ProductScreen extends Component {
                     style={[styleBase.center]}
                     dot={<View style={styles.dot} />}
                     activeDot={<View style={styles.activeDot} />}
+                    paginationStyle={{
+                      bottom: -sizeWidth(24),
+                    }}
                     loop={false}>
                     {sliders}
                   </Swiper>
@@ -168,7 +165,7 @@ class ProductScreen extends Component {
                     styleBase.textRegular,
                     styles.status,
                   ]}>
-                  {!!product && product.available ? 'Đặt hàng' : 'Có sẵn'}
+                  {!!product && product.available ? 'Phải đặt trước' : 'Có sẵn'}
                 </Text>
                 <Text style={styles.price}>
                   {numeral((!!product && product.price) || 0).format('0,0')} VNĐ
@@ -311,11 +308,11 @@ const styles = StyleSheet.create({
     marginVertical: sizeWidth(5),
   },
   header: {
-    height: sizeWidth(400),
+    height: sizeWidth(264),
   },
   image: {
-    height: sizeWidth(412),
-    width: sizeWidth(412),
+    height: sizeWidth(302),
+    width: sizeWidth(320),
   },
   item: {
     width: sizeWidth(320),
@@ -326,7 +323,6 @@ const styles = StyleSheet.create({
   name: {
     fontSize: sizeFont(20),
     fontFamily: font.medium,
-    fontWeight: '500',
     marginTop: sizeWidth(10),
     paddingHorizontal: sizeWidth(5),
     color: '#000',
@@ -334,7 +330,6 @@ const styles = StyleSheet.create({
   retailPrice: {
     fontSize: sizeFont(24),
     fontFamily: font.bold,
-    fontWeight: 'bold',
     color: appColor.primary,
     paddingHorizontal: sizeWidth(5),
     marginVertical: sizeWidth(5),
@@ -342,7 +337,6 @@ const styles = StyleSheet.create({
   price: {
     fontSize: sizeFont(24),
     fontFamily: font.bold,
-    fontWeight: 'bold',
     color: appColor.primary,
     paddingHorizontal: sizeWidth(5),
     marginVertical: sizeWidth(5),
@@ -366,7 +360,7 @@ const styles = StyleSheet.create({
   },
   wrap: {
     width: '100%',
-    height: sizeWidth(412),
+    height: sizeWidth(242),
   },
   slide: {
     height: '100%',
@@ -390,13 +384,11 @@ const styles = StyleSheet.create({
   status: {
     marginTop: sizeWidth(3),
     fontFamily: font.medium,
-    fontWeight: '500',
     color: '#11B400',
     paddingHorizontal: sizeWidth(5),
   },
   title: {
     fontFamily: font.medium,
-    fontWeight: '500',
   },
   text: {
     fontFamily: font.light,

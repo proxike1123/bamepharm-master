@@ -15,7 +15,6 @@ import {navigateBack} from 'app/src/actions/nav.action';
 import LoadingIndicator from 'app/src/components/common/loading-indicator';
 import Loading from 'app/src/components/common/loading_indicator';
 import {sizeHeight} from '../../helpers/size.helper';
-import {now} from 'moment';
 
 class RatingScreen extends React.PureComponent {
   constructor(props) {
@@ -122,9 +121,8 @@ class RatingScreen extends React.PureComponent {
         ) : isRatedThisMonth ? (
           <View style={styles.root}>
             <Text style={styles.desc}>
-              Quý khách hàng đã đánh giá nhân viên{' '}
-              <Text style={styles.saleName}>{sale}</Text> trong tháng, vui lòng
-              phản hồi vào tháng tiếp theo.
+              Quý khách hàng đã đánh giá nhân viên này trong tháng, vui lòng
+              phản hồi vào tháng tiếp theo
             </Text>
           </View>
         ) : (
@@ -198,7 +196,6 @@ const styles = StyleSheet.create({
   input: {
     textAlignVertical: 'top',
     fontFamily: font.medium,
-    fontWeight: '500',
     paddingVertical: 0,
     fontSize: sizeFont(15),
   },
@@ -212,9 +209,5 @@ const styles = StyleSheet.create({
     fontSize: sizeFont(12),
     color: appColor.blur,
     fontStyle: 'italic',
-  },
-  saleName: {
-    fontFamily: font.bold,
-    fontWeight: 'bold',
   },
 });

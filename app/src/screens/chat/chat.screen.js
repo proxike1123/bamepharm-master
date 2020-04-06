@@ -19,7 +19,7 @@ import List from 'app/src/components/common/list_view';
 import ConversationItem from 'app/src/screens/chat/component/conversation-item';
 import styleBase from 'app/src/styles/base';
 import {accountType} from 'app/src/constants/app.constant';
-import {appConfig} from 'app/src/config/app.config';
+import {appConfig} from 'app/src/config/app.config'
 
 class ChatScreen extends Component {
   constructor(props) {
@@ -47,10 +47,13 @@ class ChatScreen extends Component {
   };
 
   renderRight = () => {
-    const avatar = `${appConfig.apiUrl}public/${this.props.profile.avatar}`;
+    const avatar = `${appConfig.apiUrl}public/${this.props.profile.avatar}`
     return (
       <View style={[styles.avatarContainer, styleBase.m_10_right]}>
-        <Image style={[styles.avatar]} source={{uri: avatar}} />
+        <Image
+          style={[styles.avatar]}
+          source={{uri: avatar}}
+        />
         <View style={[styles.online]} />
       </View>
     );
@@ -83,7 +86,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: sizeFont(20),
     fontFamily: font.bold,
-    fontWeight: 'bold',
   },
   label: {
     fontSize: sizeFont(13),

@@ -101,7 +101,6 @@ const styles = StyleSheet.create({
     fontSize: sizeFont(15),
     color: 'white',
     fontFamily: font.bold,
-    fontWeight: 'bold',
   },
   textInactive: {
     fontSize: sizeFont(15),

@@ -5,7 +5,6 @@ import {
   View,
   StyleSheet,
   Image,
-  Platform,
   KeyboardAvoidingView,
 } from 'react-native';
 import PropTypes from 'prop-types';
@@ -26,9 +25,6 @@ import uuid from 'uuid';
 import ImagePicker from 'react-native-image-crop-picker';
 import {sizeWidth} from '../../../helpers/size.helper';
 import TouchableIcon from '../../../components/common/touchable-icon';
-import {links, font} from '../../../constants/app.constant';
-import {navigateToPage} from '../../../actions/nav.action';
-import {buildImage} from '../../../helpers/image-helper';
 
 @connectActionSheet
 class ConversationScreen extends React.PureComponent {
@@ -56,76 +52,30 @@ class ConversationScreen extends React.PureComponent {
       .collection(`conversation/${this.conversationKey}/messages`);
   }
 
-  navigateToProduct = productId => {
-    this.props.navigateToPage('Product', {product: {id: productId}});
-  };
-
   componentDidMount() {
     this.unsubscribe = this.conversationsRef
       .orderBy('createdAt', 'desc')
       .onSnapshot(querySnapshot => {
         const {_changes, _docs} = querySnapshot;
-        let newMessages = [];
+
         if (_changes.length === _docs.length) {
           const messages = _docs.map(doc => {
             let message = doc.data();
-            message.docId = doc.id;
             message.createdAt = message.createdAt.toDate();
-            if (message.isLink) {
-              message.text = (
-                <Text
-                  style={styles.linkText}
-                  onPress={() => this.onLinkClick(message.value)}>
-                  {message.text}
-                </Text>
-              );
-            }
-            if (message.productId) {
-              message.text = (
-                <Text onPress={() => this.navigateToProduct(message.productId)}>
-                  {message.text}
-                </Text>
-              );
-            }
             return message;
           });
-          newMessages = messages;
           this.setState(previousState => ({
             messages: GiftedChat.append(previousState.messages, messages),
           }));
         } else if (_changes.length === 1) {
           if (_changes[0]._type === 'added') {
             let message = _changes[0]._document.data();
-            message.docId = _changes[0]._document.id;
             message.createdAt = message.createdAt.toDate();
-            if (message.isLink) {
-              message.text = (
-                <Text
-                  style={styles.linkText}
-                  onPress={() => this.onLinkClick(message.value)}>
-                  {message.text}
-                </Text>
-              );
-            }
-            if (message.productId) {
-              message.text = (
-                <Text onPress={() => this.navigateToProduct(message.productId)}>
-                  {message.text}
-                </Text>
-              );
-            }
-            newMessages = [message];
             this.setState(previousState => ({
               messages: GiftedChat.append(previousState.messages, message),
             }));
           }
         }
-        const unreadMessages = newMessages.filter(
-          it => it.seen === false && it.user._id !== this.myId,
-        );
-        unreadMessages.forEach(it => {
-          this.conversationsRef.doc(it.docId).update({seen: true});
-        });
       });
 
     this.displayPartnerInfo();
@@ -137,17 +87,6 @@ class ConversationScreen extends React.PureComponent {
     }
   }
 
-  onLinkClick = link => {
-    if (this.profile.type !== accountType.agency) return;
-    if (link === 'feedback') {
-      this.props.navigateToPage('Feedback');
-    } else if (link === 'rating') {
-      this.props.navigateToPage('Rating');
-    } else if (link === 'liability') {
-      this.props.navigateToPage('Liability');
-    }
-  };
-
   composeMessage = () => {
     const product = this.props.navigation.getParam('product') || null;
     if (!product) return null;
@@ -157,8 +96,6 @@ class ConversationScreen extends React.PureComponent {
       text: `Tôi đang muốn hỗ trợ về sản phẩm ${product.name}`,
       createdAt: new Date(),
       system: true,
-      seen: false,
-      productId: product.id,
       user: {
         _id: this.myId,
       },
@@ -185,8 +122,6 @@ class ConversationScreen extends React.PureComponent {
   }
 
   onSend(messages = []) {
-    const message = messages[0];
-    message.seen = false;
     this.conversationsRef.add(messages[0]);
   }
 
@@ -208,36 +143,6 @@ class ConversationScreen extends React.PureComponent {
         </View>
       </Send>
     );
-  };
-
-  sendLink = () => {
-    const values = [...links.map(it => it.text), 'Huỷ'];
-    const cancelButtonIndex = values.length - 1;
-    this.props.showActionSheetWithOptions(
-      {
-        options: values,
-        cancelButtonIndex,
-      },
-      buttonIndex => {
-        if (buttonIndex === links.length) return;
-        const selectedLink = links[buttonIndex];
-        this.conversationsRef.add(this.composeLinkMessage(selectedLink));
-      },
-    );
-  };
-
-  composeLinkMessage = link => {
-    return {
-      _id: uuid.v4(),
-      text: link.text,
-      value: link.value,
-      isLink: true,
-      createdAt: new Date(),
-      user: {
-        _id: this.myId,
-      },
-      seen: false,
-    };
   };
 
   pickImage = () => {
@@ -290,16 +195,26 @@ class ConversationScreen extends React.PureComponent {
       user: {
         _id: this.myId,
       },
-      seen: false,
       image: image.url,
     };
   };
 
   uploadImage = async image => {
-    const file = buildImage(image);
+    const name =
+      Platform.OS === 'ios'
+        ? image.filename
+        : `my_profile_${Date.now()}.${
+            image.mime === 'image/jpeg' ? 'jpg' : 'png'
+          }`;
+
+    const file = {
+      uri: image.path,
+      type: image.mime,
+      name: name,
+    };
 
     const data = new FormData();
-    data.append('image_chat', file);
+    data.append('image_chat', file, name);
 
     const config = {
       'Content-Type': 'multipart/form-data',
@@ -323,15 +238,15 @@ class ConversationScreen extends React.PureComponent {
           iconStyle={styles.image}
           source={require('../../../../res/icon/picture.png')}
         />
-        {profile.type === accountType.sale && (
+        {/* {profile.type === accountType.sale && (
           <TouchableIcon
             onPress={() => {
-              this.sendLink();
+              this.pickImage();
             }}
             iconStyle={styles.link}
             source={require('../../../../res/icon/icon-link.png')}
           />
-        )}
+        )} */}
       </View>
     );
   };
@@ -364,9 +279,10 @@ class ConversationScreen extends React.PureComponent {
   }
 }
 
-export default connect(state => ({profile: state.profile.profile}), {
-  navigateToPage,
-})(ConversationScreen);
+export default connect(
+  state => ({profile: state.profile.profile}),
+  null,
+)(ConversationScreen);
 
 const styles = StyleSheet.create({
   container: {
@@ -402,10 +318,5 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-  },
-  linkText: {
-    textDecorationLine: 'underline',
-    fontFamily: font.semiBold,
-    fontWeight: '500',
   },
 });

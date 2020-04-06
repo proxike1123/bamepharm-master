@@ -35,7 +35,6 @@ const styles = StyleSheet.create({
   headerText: {
     textTransform: 'uppercase',
     fontFamily: font.bold,
-    fontWeight: 'bold',
     fontSize: sizeFont(17),
   },
   agency: {
@@ -51,7 +50,6 @@ const styles = StyleSheet.create({
   },
   label: {
     fontFamily: font.bold,
-    fontWeight: 'bold',
     fontSize: sizeFont(15),
     paddingRight: sizeWidth(10),
   },

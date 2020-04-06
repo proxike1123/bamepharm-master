@@ -7,7 +7,6 @@ import {
   Image,
   Platform,
 } from 'react-native';
-import firebase from 'react-native-firebase';
 import {resetPage, navigateToPage} from '../../actions/nav.action';
 import Text from '../../components/common/text';
 import {connect} from 'react-redux';
@@ -26,7 +25,6 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {appConfig} from 'app/src/config/app.config';
 import {loadCart} from 'app/src/actions/cart.action';
 import CartIcon from '../../components/common/cart-icon';
-import {buildImage} from '../../helpers/image-helper';
 
 @connectActionSheet
 class AccountScreen extends Component {
@@ -168,8 +166,7 @@ class AccountScreen extends Component {
             cropping: true,
             cropperCircleOverlay: true,
           }).then(avatar => {
-            const data = buildImage(avatar);
-            this.uploadAvatar(data);
+            this.uploadAvatar(avatar);
           });
         }
         if (buttonIndex === 1) {
@@ -180,8 +177,7 @@ class AccountScreen extends Component {
             cropping: true,
             cropperCircleOverlay: true,
           }).then(avatar => {
-            const data = buildImage(avatar);
-            this.uploadAvatar(data);
+            this.uploadAvatar(avatar);
           });
         }
       },
@@ -189,8 +185,21 @@ class AccountScreen extends Component {
   };
 
   uploadAvatar = async image => {
+    const name =
+      Platform.OS === 'ios'
+        ? image.filename
+        : `my_profile_${Date.now()}.${
+            image.mime === 'image/jpeg' ? 'jpg' : 'png'
+          }`;
+
+    const file = {
+      uri: image.path,
+      type: image.mime,
+      name: name,
+    };
+
     const data = new FormData();
-    data.append('avatar', image);
+    data.append('avatar', file, name);
 
     const config = {
       'Content-Type': 'multipart/form-data',
@@ -228,8 +237,7 @@ class AccountScreen extends Component {
   };
 
   logout = async () => {
-    const fcmToken = await firebase.messaging().getToken();
-    await Api.logoutAgency({device_id: fcmToken});
+    await Api.logoutAgency();
     await removeToken();
     await removeProfile();
     await this.props.loadCart([]);
@@ -253,7 +261,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: sizeFont(18),
     fontFamily: font.bold,
-    fontWeight: 'bold',
   },
   label: {
     fontSize: sizeFont(13),
@@ -316,7 +323,6 @@ const styles = StyleSheet.create({
     fontSize: sizeFont(18),
     marginBottom: sizeWidth(6),
     fontFamily: font.bold,
-    fontWeight: 'bold',
   },
   address: {
     fontSize: sizeFont(16),

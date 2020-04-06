@@ -1,6 +1,5 @@
 import RequestHelper from '../helpers/request.helper';
 import lodash from 'lodash';
-import {Platform} from 'react-native';
 import {appConfig} from '../config/app.config';
 import {accountType} from '../constants/app.constant';
 import {getSelectedAgency} from '../helpers/storage.helper';
@@ -34,18 +33,12 @@ export default class Api {
     );
   }
 
-  static logoutSale(data) {
-    return RequestHelper.post(
-      appConfig.apiUrl + 'public/api/admin/logout',
-      data,
-    );
+  static logoutSale() {
+    return RequestHelper.post(appConfig.apiUrl + 'public/api/admin/logout');
   }
 
-  static logoutAgency(data) {
-    return RequestHelper.post(
-      appConfig.apiUrl + 'public/api/agency/logout',
-      data,
-    );
+  static logoutAgency() {
+    return RequestHelper.post(appConfig.apiUrl + 'public/api/agency/logout');
   }
 
   static agencyInfo() {
@@ -205,20 +198,10 @@ export default class Api {
     });
   }
 
-  static sendFeedback(content, image) {
-    const data = new FormData();
-    if (image) {
-      data.append('image', image);
-    }
-
-    data.append('content', content);
-    return RequestHelper.post(
-      appConfig.apiUrl + 'public/api/agency/feedback',
-      data,
-      {
-        'Content-Type': 'multipart/form-data',
-      },
-    );
+  static sendFeedback(content) {
+    return RequestHelper.post(appConfig.apiUrl + 'public/api/agency/feedback', {
+      content,
+    });
   }
 
   static getListRating() {
@@ -394,15 +377,6 @@ export default class Api {
         `public/api/${
           type === accountType.agency ? 'agency' : 'admin'
         }/getCommentChangeStatus/${idOrder}`,
-    );
-  }
-
-  static getOrderById(idOrder, type) {
-    return RequestHelper.get(
-      appConfig.apiUrl +
-        `public/api/${
-          type === accountType.agency ? 'agency' : 'admin'
-        }/getOrderById/${idOrder}`,
     );
   }
 }

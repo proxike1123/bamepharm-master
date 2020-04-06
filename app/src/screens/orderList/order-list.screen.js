@@ -313,7 +313,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: sizeFont(18),
     fontFamily: font.bold,
-    fontWeight: 'bold',
   },
   tabs: {
     flexDirection: 'row',
@@ -328,11 +327,9 @@ const styles = StyleSheet.create({
   text: {
     color: appColor.blur,
     fontFamily: font.medium,
-    fontWeight: '500',
   },
   activeText: {
     fontFamily: font.bold,
-    fontWeight: 'bold',
   },
   line: {
     position: 'absolute',
@@ -356,7 +353,7 @@ const styles = StyleSheet.create({
   },
   emptyImage: {
     height: sizeWidth(50),
-    color: styleBase.textGrey.color,
+    //color: styleBase.textGrey.color,
   },
   separator: {
     width: '100%',

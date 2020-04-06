@@ -31,12 +31,16 @@ class InputView extends React.PureComponent {
       : !!value
       ? appColor.primary
       : 'rgba(0,0,0,.5)';
+    let iconColor = !!errorMessage
+      ? appColor.error
+      : !!value
+      ? appColor.primary
+      : 'rgba(0,0,0,.5)';
     let textColor = !!errorMessage ? appColor.error : appColor.textColor;
-
     return (
       <View style={[style]}>
         <View style={[styles.container, {borderColor}]}>
-          <Image source={icon} style={[styles.icon, iconStyle]} />
+          <Image source={icon} style={[styles.icon, iconStyle, {tintColor: iconColor}]} />
           <TextInput
             style={[styles.input, {color: textColor}]}
             value={value}
@@ -61,7 +65,7 @@ class InputView extends React.PureComponent {
 
 InputView.propTypes = {
   style: PropTypes.any,
-  icon: PropTypes.object,
+  icon: PropTypes.number,
   placeholder: PropTypes.string,
   onChangeText: PropTypes.func,
   errorMessage: PropTypes.string,
@@ -71,7 +75,7 @@ InputView.propTypes = {
   onSubmitEditing: PropTypes.func,
   secureTextEntry: PropTypes.bool,
   autoCapitalize: PropTypes.string,
-  returnKeyType: PropTypes.bool,
+  returnKeyType: PropTypes.string,
   inputRef: PropTypes.func,
 };
 
@@ -96,7 +100,7 @@ const styles = StyleSheet.create({
     width: sizeWidth(328),
     height: sizeWidth(50),
     paddingHorizontal: sizeWidth(20),
-    borderWidth: 0.5,
+    borderWidth: 1,
     backgroundColor: 'white',
     alignSelf: 'center',
     flexDirection: 'row',
@@ -111,7 +115,6 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontFamily: font.medium,
-    fontWeight: '500',
     marginLeft: sizeWidth(12),
     fontSize: sizeFont(14),
     lineHeight: sizeFont(18),

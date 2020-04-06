@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, {PureComponent} from 'react';
+import React, { PureComponent } from 'react';
 import {
   ScrollView,
   StyleSheet,
@@ -7,12 +7,11 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import {getStatusBarHeight, isIphoneX} from 'react-native-iphone-x-helper';
+import { getStatusBarHeight, isIphoneX } from 'react-native-iphone-x-helper';
 import Modal from 'react-native-modal';
 import Input from '../../components/common/input';
-import {appColor, font} from '../../constants/app.constant';
-import {sizeWidth, sizeFont} from '../../helpers/size.helper';
-import SearchInput from './search-input';
+import { appColor, font } from '../../constants/app.constant';
+import { sizeWidth, sizeFont } from '../../helpers/size.helper';
 
 const styles = StyleSheet.create({
   modal: {
@@ -43,7 +42,6 @@ const styles = StyleSheet.create({
     color: '#4F4F4F',
     fontSize: sizeFont(17),
     fontFamily: font.medium,
-    fontWeight: '500',
   },
   search: {
     marginTop: 15,
@@ -58,20 +56,14 @@ const styles = StyleSheet.create({
     color: '#4A4A4A',
     fontSize: sizeFont(15),
     fontFamily: font.medium,
-    fontWeight: '500',
   },
   selectedItem: {
     color: appColor.primary,
     fontFamily: font.medium,
-    fontWeight: '500',
   },
   firstItem: {
     borderTopWidth: 0,
     paddingTop: 5,
-  },
-  searchInput: {
-    backgroundColor: appColor.bg,
-    marginBottom: sizeWidth(8),
   },
 });
 
@@ -79,7 +71,7 @@ class PopupSelection extends PureComponent {
   constructor(props) {
     super(props);
 
-    const {items} = props;
+    const { items } = props;
 
     this.state = {
       items,
@@ -88,15 +80,19 @@ class PopupSelection extends PureComponent {
   }
 
   componentWillReceiveProps(nextProps) {
-    const {items, isVisible} = nextProps;
-    this.setState({items});
+    const { items, isVisible } = nextProps;
+    this.setState({ items });
     if (isVisible && !this.props.isVisible) {
-      this.setState({searchText: ''});
+      this.setState({ searchText: '' });
     }
   }
 
+  onChangeTextSearch = searchText => {
+    this.setState({ searchText });
+  };
+
   renderItem = (item, index) => {
-    const {selectedItem, renderItem, onPressItem} = this.props;
+    const { selectedItem, renderItem, onPressItem } = this.props;
     return (
       <TouchableOpacity
         key={index}
@@ -115,13 +111,9 @@ class PopupSelection extends PureComponent {
     );
   };
 
-  onKeywordChange = value => {
-    this.setState({searchText: value});
-  };
-
   renderContent = () => {
-    const {items, searchText} = this.state;
-    const {searchTerm} = this.props;
+    const { items, searchText } = this.state;
+    const { searchTerm } = this.props;
     let renderData = items;
     if (searchText) {
       renderData = (items || []).filter(c => {
@@ -131,16 +123,9 @@ class PopupSelection extends PureComponent {
     }
     return (
       <ScrollView
-        contentContainerStyle={{flexGrow: 1}}
+        contentContainerStyle={{ flexGrow: 1 }}
         keyboardShouldPersistTaps="handled"
         showsVerticalScrollIndicator={false}>
-        <SearchInput
-          value={searchText}
-          onChangeText={this.onKeywordChange}
-          hideBarcode
-          style={styles.searchInput}
-          placeholder="Tìm kiếm đại lý"
-        />
         <View style={styles.content}>{renderData.map(this.renderItem)}</View>
       </ScrollView>
     );
@@ -157,8 +142,12 @@ class PopupSelection extends PureComponent {
   );
 
   render() {
-    const {title} = this.props;
-    return <View style={styles.root}>{this.renderContent()}</View>;
+    const { title } = this.props;
+    return (
+      <View style={styles.root}>
+        {this.renderContent()}
+      </View>
+    );
   }
 }
 

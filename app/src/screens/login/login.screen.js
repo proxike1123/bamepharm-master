@@ -54,7 +54,7 @@ class LoginScreen extends Component {
             <Image
               style={styles.logo}
               resizeMode="stretch"
-              source={require('../../../res/icon/ic_app_login.png')}
+              source={require('../../../res/icon/bp_logo.png')}
             />
             <View style={[styles.contentContainer]}>
               <View style={styles.content}>
@@ -63,7 +63,7 @@ class LoginScreen extends Component {
                   onSubmitEditing={() =>
                     !!this.passwordRef && this.passwordRef.focus()
                   }
-                  returnKeyType={'next'}
+                  returnKeyType='next'
                   autoCapitalize="none"
                   errorMessage={emailError}
                   value={email}
@@ -95,7 +95,7 @@ class LoginScreen extends Component {
               styleBase.textAppColor,
               styleBase.textMedium,
             ]}>
-            Copyright by BQ Shoes 2019-2020
+            Copyright by Bamepharm 2020-2021
           </Text>
         </View>
         {!!loading && <LoadingIndicator text={'Đăng nhập...'} />}
@@ -187,9 +187,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logo: {
-    width: sizeWidth(414),
-    height: sizeWidth(414),
+    width: sizeWidth(350),
+    height: sizeWidth(350),
     marginBottom: sizeWidth(20),
+    marginTop: sizeWidth(20),
   },
   signIn: {
     width: sizeWidth(290),
@@ -222,7 +223,7 @@ const styles = StyleSheet.create({
     left: 0,
   },
   marginVertical: {
-    marginVertical: sizeWidth(17),
+    marginVertical: sizeWidth(15),
   },
   center: {
     paddingBottom: sizeWidth(100),

@@ -19,7 +19,7 @@ class NotificationItem extends PureComponent {
           <Text
             style={[
               styles.title,
-              {fontWeight: !seen_time ? 'bold' : 'normal'},
+              {fontFamily: !seen_time ? font.bold : font.regular},
             ]}>
             {title}
           </Text>
@@ -70,11 +70,11 @@ const styles = StyleSheet.create({
   },
   title: {
     color: appColor.textColor,
-    fontSize: sizeFont(18),
+    fontSize: sizeFont(15),
   },
   message: {
     color: '#4A4A4A',
-    fontSize: sizeFont(15),
+    fontSize: sizeFont(12),
     fontFamily: font.regular,
   },
   timestamp: {

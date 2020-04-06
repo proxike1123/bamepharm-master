@@ -119,7 +119,7 @@ class SearchProductScreen extends React.PureComponent {
           <List
             renderItem={this.renderItem}
             styles={[styleBase.p_10_horizontal, styleBase.p_10_vertical]}
-            numColumns={3}
+            numColumns={4}
             onEndReachedThreshold={2}
             onEndReach={this.loadMore.bind(this)}
             dataSources={products}
@@ -148,7 +148,7 @@ class SearchProductScreen extends React.PureComponent {
                 </Text>
                 {this.props.profile.type === accountType.agency && (
                   <LinearGradient
-                    colors={['#F98649', '#F04E23']}
+                    colors={[appColor.leftLinear, appColor.rightLinear]}
                     start={{x: 0, y: 0}}
                     end={{x: 1, y: 1}}
                     style={[

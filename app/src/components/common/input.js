@@ -76,6 +76,5 @@ const styles = StyleSheet.create({
     marginBottom: sizeWidth(12),
     color: '#444444',
     fontFamily: font.medium,
-    fontWeight: '500',
   },
 });

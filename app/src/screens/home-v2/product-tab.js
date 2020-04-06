@@ -26,12 +26,13 @@ class HomeTabProduct extends React.PureComponent {
 
   handleFetchProductByCategory = async () => {
     let {profile, categoryId} = this.props;
-    if (!categoryId) return this.setState({loading: false, refreshing: false});
+    if (!categoryId) return;
     try {
       const response = await Api.homeProducts(categoryId, profile.type);
       this.setState({listProduct: response[0]});
     } catch (e) {}
-    this.setState({loading: false, refreshing: false});
+
+    this.setState({loading: false});
   };
 
   navigateToProductList = category => {
@@ -39,7 +40,7 @@ class HomeTabProduct extends React.PureComponent {
   };
 
   onRefresh = () => {
-    this.setState({refreshing: true}, () => {
+    this.setState({loading: true}, () => {
       this.handleFetchProductByCategory();
     });
   };
@@ -53,6 +54,7 @@ class HomeTabProduct extends React.PureComponent {
           <LoadingIndicator />
         ) : (
           <ScrollView
+            bounces={false}
             refreshControl={
               <RefreshControl
                 refreshing={refreshing}

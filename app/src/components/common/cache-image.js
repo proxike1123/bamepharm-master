@@ -16,7 +16,7 @@ export default class CacheImage extends Component {
       this.props.placeholder || require('../../../res/icon/default-image.png');
     return (
       <Image
-        resizeMode={resizeMode}
+        resizeMode={resizeMode || 'contain'}
         resizeMethod="resize"
         style={style}
         source={placeholder}

@@ -81,13 +81,7 @@ class HomeScreen extends React.PureComponent {
       inactiveColor={'#CCCCCC'}
       indicatorStyle={styles.indicator}
       renderLabel={({route, focused, color}) => (
-        <Text
-          style={{
-            color,
-            margin: 5,
-            fontWeight: '500',
-            fontFamily: font.medium,
-          }}>
+        <Text style={{color, margin: 5, fontFamily: font.medium}}>
           {route.name}
         </Text>
       )}
@@ -97,7 +91,6 @@ class HomeScreen extends React.PureComponent {
 
   renderScene = ({route}) => {
     let {index, routes} = this.state;
-
     if (Math.abs(index - routes.indexOf(route)) > 3) {
       return <View />;
     }
@@ -178,6 +171,7 @@ export default connect(
   }),
   null,
 )(HomeScreen);
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,

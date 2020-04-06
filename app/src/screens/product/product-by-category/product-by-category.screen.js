@@ -13,11 +13,8 @@ import {appColor, font} from '../../../constants/app.constant';
 import {sizeFont, sizeHeight, sizeWidth} from '../../../helpers/size.helper';
 import {getProfile} from '../../../helpers/storage.helper';
 import ProductToolbar from '../product-toolbar';
-import AnalyticsHelper, {
-  analyticsEvents,
-} from '../../../helpers/analytics.helper';
 
-const LIMIT = 6;
+const LIMIT = 10;
 class ProduceByCategoryScreen extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -43,10 +40,6 @@ class ProduceByCategoryScreen extends React.PureComponent {
   componentDidMount = async () => {
     this.setState({loading: true});
     const {params} = this.state;
-    AnalyticsHelper.logEvent(analyticsEvents.viewScreen, {
-      screenName: 'product_by_category',
-      ...params,
-    });
     try {
       const profile = await getProfile();
       const response = await Api.productByCategory(params, profile.type);
@@ -168,7 +161,6 @@ const styles = StyleSheet.create({
     color: appColor.primary,
     fontSize: sizeFont(16),
     fontFamily: font.bold,
-    fontWeight: 'bold',
     textTransform: 'uppercase',
   },
   line: {

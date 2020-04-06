@@ -14,7 +14,7 @@ export default class MonthList extends Component {
         month: current.get('months') + 1,
         year: current.get('years'),
       });
-      current = current.add('months', -1);
+      current = current.add(-1, 'months');
     }
 
     return (

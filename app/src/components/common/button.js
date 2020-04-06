@@ -31,7 +31,7 @@ export default class Button extends Component {
         onPress={onPress}>
         <LinearGradient
           style={styles.overlay}
-          colors={['#F98649', '#F04E23']}
+          colors={[appColor.leftLinear, appColor.rightLinear]}
           start={{x: 0, y: 0}}
           end={{x: 1, y: 1}}
         />
@@ -80,7 +80,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: sizeFont(16),
     fontFamily: font.bold,
-    fontWeight: 'bold',
   },
   overlay: {
     position: 'absolute',

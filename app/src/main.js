@@ -7,6 +7,7 @@ import {
   NetInfo,
   BackHandler,
   SafeAreaView,
+  YellowBox,
 } from 'react-native';
 import {AppNavigator} from './navigators/app.navigator';
 import {addNavigationHelpers, NavigationActions} from 'react-navigation';
@@ -14,28 +15,24 @@ import {connect} from 'react-redux';
 import firebase from 'react-native-firebase';
 import {createReduxContainer} from 'react-navigation-redux-helpers';
 import EventRegister from './helpers/event-register.helper';
-import {event, appColor, accountType} from './constants/app.constant';
+import {event, appColor} from './constants/app.constant';
 import {
   removeToken,
   removeProfile,
   removeSelectedAgency,
-  getProfile,
 } from './helpers/storage.helper';
 import {loadCart} from './actions/cart.action';
 import {resetPage} from './actions/nav.action';
 import {navigateToPage} from 'app/src/actions/nav.action';
 import LinearGradient from 'react-native-linear-gradient';
 import {sizeWidth} from 'app/src/helpers/size.helper';
-import Api from './api/api';
-import {loadedProfile} from './actions/profile.action';
-import {updateDidNavigate} from './helpers/notification-navigate.helper';
 
 const AppContainer = createReduxContainer(AppNavigator);
 const mapStateToProps = state => ({
   state: state.nav,
 });
 const AppWithNavigationState = connect(mapStateToProps)(AppContainer);
-
+console.disableYellowBox = true;
 class Main extends Component {
   shouldCloseApp = () => {
     return this.props.nav.index === 0;
@@ -75,35 +72,17 @@ class Main extends Component {
       });
     this.notificationOpenedListener = firebase
       .notifications()
-      .onNotificationOpened(async notificationOpen => {
-        await this.navigateToNotification();
+      .onNotificationOpened(notificationOpen => {
+        const {notification} = notificationOpen;
+        EventRegister.emit(event.reloadUnread);
+        this.props.navigateToPage('Notification');
       });
     const notificationOpen = await firebase
       .notifications()
       .getInitialNotification();
     if (notificationOpen) {
-      await this.navigateToNotification();
-    }
-  };
-
-  navigateToNotification = async () => {
-    updateDidNavigate(true);
-    const profile = await getProfile();
-    if (profile) {
-      const newProfile =
-        profile.type === accountType.agency
-          ? await Api.agencyInfo()
-          : await Api.saleInfo();
-      this.props.loadedProfile({...profile, ...newProfile});
-      if (profile.type === accountType.agency) {
-        this.props.resetPage('Main');
-      } else {
-        this.props.resetPage('SaleMain');
-      }
       EventRegister.emit(event.reloadUnread);
       this.props.navigateToPage('Notification');
-    } else {
-      this.props.resetPage('Login');
     }
   };
 
@@ -224,6 +203,5 @@ export default connect(
       dispatch(navigateToPage(routName, data)),
     resetPage: page => dispatch(resetPage(page)),
     loadCart: () => dispatch(loadCart()),
-    loadedProfile: profile => dispatch(loadedProfile(profile)),
   }),
 )(Main);

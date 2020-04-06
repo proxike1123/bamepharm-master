@@ -198,7 +198,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: sizeFont(18),
     fontFamily: font.bold,
-    fontWeight: 'bold',
   },
   save: {
     color: 'white',
@@ -214,7 +213,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     width: sizeWidth(402),
     fontFamily: font.bold,
-    fontWeight: 'bold',
     paddingVertical: sizeWidth(9),
     paddingHorizontal: sizeWidth(12),
   },

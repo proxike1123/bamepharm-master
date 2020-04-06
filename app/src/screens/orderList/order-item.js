@@ -83,19 +83,17 @@ class OrderItem extends Component {
   };
 
   handleNavigateDetail = async () => {
-    const {order} = this.props;
-    if (!order || !order.id) return;
-    this.props.navigateToPage('OrderDetail', {order, orderId: order.id});
+      const {order} = this.props;
+      if (!order || !order.id) return;
+      this.props.navigateToPage('OrderDetail', {orderId: order.id});
   };
 
   render(): ReactNode {
     const {order, nextStatus, nextStatusKey, showCancel} = this.props;
     const image = `${appConfig.apiUrl}public${order.p_img}`;
-    console.log(order);
     return (
-      <TouchableOpacity
-        style={[styles.container]}
-        onPress={this.handleNavigateDetail}>
+      <TouchableOpacity style={[styles.container]}
+                        onPress={this.handleNavigateDetail}>
         <View style={styles.header}>
           <Text style={styles.date}>
             Ngày đặt hàng:{' '}
@@ -115,7 +113,6 @@ class OrderItem extends Component {
             </Text>
           )}
         </View>
-        <Text style={styles.agency}>Đại lý đặt hàng: {order.full_name}</Text>
         <View style={styles.body}>
           <Image
             style={styles.image}
@@ -172,7 +169,6 @@ const styles = StyleSheet.create({
     color: appColor.primary,
     marginLeft: sizeWidth(12),
     fontFamily: font.medium,
-    fontWeight: '500',
   },
   body: {
     flexDirection: 'row',
@@ -191,7 +187,6 @@ const styles = StyleSheet.create({
   name: {},
   price: {
     fontFamily: font.bold,
-    fontWeight: 'bold',
     marginVertical: sizeWidth(6),
   },
   count: {},
@@ -206,9 +201,5 @@ const styles = StyleSheet.create({
   total: {
     color: appColor.primary,
     fontFamily: font.bold,
-    fontWeight: 'bold',
-  },
-  agency: {
-    marginBottom: sizeWidth(8),
   },
 });

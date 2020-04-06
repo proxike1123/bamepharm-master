@@ -12,7 +12,6 @@ import Text from '../../components/common/text';
 import Toolbar from '../../components/common/toolbar';
 import {accountType, appColor, font} from '../../constants/app.constant';
 import {sizeFont, sizeWidth} from '../../helpers/size.helper';
-import Button from '../../components/common/button';
 
 class NotificationDetailScreen extends Component {
   constructor(props) {
@@ -50,30 +49,9 @@ class NotificationDetailScreen extends Component {
     this.setState({loading: false});
   };
 
-  navigateToOrderDetail = () => {
-    const {notification} = this.state;
-    this.props.navigateToPage('OrderDetail', {orderId: notification.id_order});
-  };
-
-  navigateToLink = () => {
-    const {notification} = this.state;
-    switch (notification.link) {
-      case 'shop_owe':
-        this.props.navigateToPage('Liability');
-        break;
-      case 'feedback':
-        this.props.navigateToPage('Feedback');
-        break;
-      case 'rating':
-        this.props.navigateToPage('Rating');
-        break;
-      default:
-        break;
-    }
-  };
-
   render() {
     let {notification, loading} = this.state;
+
     return (
       <View style={styles.container}>
         <Toolbar
@@ -103,20 +81,6 @@ class NotificationDetailScreen extends Component {
                     ]}
                     html={notification.content}
                   />
-                  {!!notification.id_order && (
-                    <Button
-                      style={styles.button}
-                      text="XEM ĐƠN HÀNG"
-                      onPress={this.navigateToOrderDetail}
-                    />
-                  )}
-                  {!!notification.link && notification.link !== 'n' && (
-                    <Button
-                      style={styles.button}
-                      text="LINK ĐÍNH KÈM"
-                      onPress={this.navigateToLink}
-                    />
-                  )}
                 </ScrollView>
               </View>
             )}
@@ -145,12 +109,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: sizeFont(18),
     fontFamily: font.bold,
-    fontWeight: 'bold',
-  },
-  button: {
-    marginTop: sizeWidth(16),
-    width: sizeWidth(200),
-    alignSelf: 'center',
   },
   body: {
     flex: 1,
@@ -160,19 +118,18 @@ const styles = StyleSheet.create({
     paddingVertical: sizeWidth(10),
   },
   time: {
-    marginBottom: sizeWidth(18),
-    fontSize: sizeFont(15),
+    marginBottom: sizeWidth(10),
+    fontSize: sizeFont(13),
     color: appColor.blur,
   },
   text: {
     color: appColor.text,
-    fontSize: sizeFont(18),
+    fontSize: sizeFont(13),
     fontFamily: font.regular,
   },
   label: {
-    fontSize: sizeFont(23),
+    fontSize: sizeFont(16),
     fontFamily: font.bold,
-    fontWeight: 'bold',
     marginBottom: sizeWidth(10),
   },
 });

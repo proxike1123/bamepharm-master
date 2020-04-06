@@ -11,23 +11,25 @@ export const message = {
 };
 
 export const font = {
-  medium: 'System',
-  bold: 'System',
-  regular: 'System',
-  light: 'System',
+  medium: 'Arial-Mdm',
+  bold: 'Arial-BoldMT',
+  regular: 'Arial',
+  light: 'Arial-Lgt',
   ultralight: 'System',
-  semiBold: 'System',
+  semiBold: 'semiBold',
 };
 
 export const appColor = {
-  primary: '#F04E23',
-  button: '#ef5839',
+  primary: '#088F43',
+  button: '#2A2A2A',
   icon: '#444444',
   text: '#444444',
   blur: '#979797',
   bg: '#F9F9F9',
   error: '#DD0000',
   textColor: '#4A4A4A',
+  leftLinear: '#7B7B7B',
+  rightLinear: '#2A2A2A',
 };
 
 export const accountType = {
@@ -37,20 +39,5 @@ export const accountType = {
 
 export const event = {
   forceLogout: 'forceLogout',
-  reloadUnread: 'reloadUnread',
+  reloadUnread: 'reloadUnread'
 };
-
-export const links = [
-  {
-    text: 'Đánh giá nhân viên',
-    value: 'rating',
-  },
-  {
-    text: 'Phản hồi về BQ',
-    value: 'feedback',
-  },
-  {
-    text: 'Công nợ',
-    value: 'liability',
-  },
-];

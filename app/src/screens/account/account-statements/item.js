@@ -51,7 +51,10 @@ class AccountStatementItem extends Component {
   };
 }
 
-export default connect(null, {navigateToPage})(AccountStatementItem);
+export default connect(
+  null,
+  {navigateToPage},
+)(AccountStatementItem);
 
 const styles = StyleSheet.create({
   container: {
@@ -93,7 +96,6 @@ const styles = StyleSheet.create({
     color: '#000000',
     fontSize: sizeFont(16),
     fontFamily: font.bold,
-    fontWeight: 'bold',
     flex: 1,
     paddingLeft: sizeWidth(15),
   },
@@ -101,7 +103,6 @@ const styles = StyleSheet.create({
     color: appColor.primary,
     fontSize: sizeFont(16),
     fontFamily: font.bold,
-    fontWeight: 'bold',
     flex: 1,
     paddingLeft: sizeWidth(15),
   },

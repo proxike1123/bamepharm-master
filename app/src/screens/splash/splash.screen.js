@@ -11,19 +11,15 @@ import {
 } from '../../helpers/storage.helper';
 import Api from '../../api/api';
 import {loadedProfile} from '../../actions/profile.action';
-import {getCart} from 'app/src/helpers/storage.helper';
-import {addToCart} from 'app/src/actions/cart.action';
-import {
-  getDidNavigate,
-  updateDidNavigate,
-} from '../../helpers/notification-navigate.helper';
+import { getCart } from "app/src/helpers/storage.helper";
+import { addToCart } from "app/src/actions/cart.action";
 class SplashScreen extends Component {
   render(): ReactNode {
     return (
       <View style={styles.container}>
         <Image
           resizeMode="stretch"
-          source={require('app/res/icon/ic_app_splash.png')}
+          source={require('app/res/icon/bp_logo.png')}
           style={styles.image}
         />
       </View>
@@ -34,9 +30,9 @@ class SplashScreen extends Component {
     const profile = await getProfile();
     const cart = await getCart();
     if (!!cart && Array.isArray(JSON.parse(cart))) {
-      JSON.parse(cart).map(item => {
-        this.props.addToCart(item);
-      });
+        JSON.parse(cart).map(item => {
+            this.props.addToCart(item);
+        });
     }
 
     setTimeout(async () => {
@@ -47,9 +43,6 @@ class SplashScreen extends Component {
               ? await Api.agencyInfo()
               : await Api.saleInfo();
           this.props.loadedProfile({...profile, ...newProfile});
-          const didNavigate = getDidNavigate();
-          updateDidNavigate(false);
-          if (didNavigate) return;
           if (profile.type === accountType.agency) {
             this.props.resetPage('Main');
           } else {
@@ -67,12 +60,7 @@ class SplashScreen extends Component {
   };
 }
 
-export default connect(
-  state => ({
-    nav: state.nav,
-  }),
-  {resetPage, loadedProfile, addToCart},
-)(SplashScreen);
+export default connect(null, {resetPage, loadedProfile, addToCart})(SplashScreen);
 
 const styles = StyleSheet.create({
   container: {
@@ -83,6 +71,6 @@ const styles = StyleSheet.create({
   },
   image: {
     width: sizeWidth(300),
-    height: sizeHeight(142.6),
+    height: sizeHeight(300),
   },
 });

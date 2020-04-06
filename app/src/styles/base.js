@@ -201,11 +201,9 @@ const styleBase = StyleSheet.create({
   },
   textBold: {
     fontFamily: font.bold,
-    fontWeight: 'bold',
   },
   textMedium: {
     fontFamily: font.medium,
-    fontWeight: '500',
   },
   textRegular: {
     fontFamily: font.regular,
@@ -215,7 +213,6 @@ const styleBase = StyleSheet.create({
   },
   textSemiBold: {
     fontFamily: font.semiBold,
-    fontWeight: 'bold',
   },
   textGray29: {
     color: '#4A4A4A',

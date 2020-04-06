@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native';
-import firebase from 'react-native-firebase';
 import {connectActionSheet} from '@expo/react-native-action-sheet';
 import {resetPage, navigateToPage} from '../../actions/nav.action';
 import Text from '../../components/common/text';
@@ -29,7 +28,6 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {loadCart} from 'app/src/actions/cart.action';
 import {appConfig} from '../../config/app.config';
 import EventRegister from '../../helpers/event-register.helper';
-import {buildImage} from '../../helpers/image-helper';
 
 @connectActionSheet
 class AccountSaleScreen extends Component {
@@ -76,8 +74,7 @@ class AccountSaleScreen extends Component {
             cropping: true,
             cropperCircleOverlay: true,
           }).then(avatar => {
-            const data = buildImage(avatar);
-            this.uploadAvatar(data);
+            this.uploadAvatar(avatar);
           });
         }
         if (buttonIndex === 1) {
@@ -88,8 +85,7 @@ class AccountSaleScreen extends Component {
             cropping: true,
             cropperCircleOverlay: true,
           }).then(avatar => {
-            const data = buildImage(avatar);
-            this.uploadAvatar(data);
+            this.uploadAvatar(avatar);
           });
         }
       },
@@ -97,8 +93,21 @@ class AccountSaleScreen extends Component {
   };
 
   uploadAvatar = async image => {
+    const name =
+      Platform.OS === 'ios'
+        ? image.filename
+        : `my_profile_${Date.now()}.${
+            image.mime === 'image/jpeg' ? 'jpg' : 'png'
+          }`;
+
+    const file = {
+      uri: image.path,
+      type: image.mime,
+      name: name,
+    };
+
     const data = new FormData();
-    data.append('avatar', image);
+    data.append('avatar', file, name);
 
     const config = {
       'Content-Type': 'multipart/form-data',
@@ -213,8 +222,7 @@ class AccountSaleScreen extends Component {
   }
 
   logout = async () => {
-    const fcmToken = await firebase.messaging().getToken();
-    await Api.logoutSale({device_id: fcmToken});
+    await Api.logoutSale();
     await removeToken();
     await removeProfile();
     await removeSelectedAgency();
@@ -239,7 +247,6 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: sizeFont(18),
     fontFamily: font.bold,
-    fontWeight: 'bold',
   },
   label: {
     fontSize: sizeFont(13),
@@ -296,7 +303,6 @@ const styles = StyleSheet.create({
     fontSize: sizeFont(18),
     marginBottom: sizeWidth(6),
     fontFamily: font.bold,
-    fontWeight: 'bold',
   },
   address: {
     fontSize: sizeFont(16),

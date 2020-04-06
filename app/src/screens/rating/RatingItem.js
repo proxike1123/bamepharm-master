@@ -22,7 +22,8 @@ class RatingItem extends React.PureComponent {
           <Text style={[styleBase.text15, styles.title, styleBase.textBold]}>
             {rating.title}
           </Text>
-          <View style={[styles.ratingContainer]}>
+        </View>
+        <View style={[styles.ratingContainer]}>
           <AirbnbRating
             showRating={false}
             count={5}
@@ -32,7 +33,6 @@ class RatingItem extends React.PureComponent {
             onFinishRating={onRating}
           />
         </View>
-        </View> 
       </View>
     );
   }
@@ -57,8 +57,8 @@ const styles = StyleSheet.create({
     marginBottom: sizeWidth(15),
   },
   icon: {
-    width: sizeWidth(20),
-    height: sizeWidth(20),
+    width: sizeWidth(26),
+    height: sizeWidth(26),
     marginRight: sizeWidth(12),
   },
   body: {
@@ -67,13 +67,11 @@ const styles = StyleSheet.create({
   },
   ratingContainer: {
     marginTop: sizeWidth(5),
-    flex: 1,
-    alignItems: 'flex-end',
-
+    alignItems: 'flex-start',
   },
   star: {
-    width: sizeWidth(20),
-    height: sizeWidth(20),
+    width: sizeWidth(36),
+    height: sizeWidth(36),
   },
   title: {
     color: '#333',

@@ -18,7 +18,6 @@ import validator from 'validator';
 import HTML from 'react-native-render-html';
 import Toast from 'react-native-root-toast';
 import {sizeFont} from '../../helpers/size.helper';
-import GroupItem from './group-item';
 
 class OrderDetailScreen extends React.PureComponent {
   constructor(props) {
@@ -30,7 +29,6 @@ class OrderDetailScreen extends React.PureComponent {
       loading: true,
       keyboardShown: false,
       history: [],
-      orderItem: null,
     };
   }
 
@@ -71,9 +69,8 @@ class OrderDetailScreen extends React.PureComponent {
     const {profile} = this.props.profile;
     try {
       let response = await Api.getOrderDetail(orderId, profile.type);
-      const orderRes = await Api.getOrderById(orderId, profile.type);
       if (lodash.isArray(response)) {
-        this.setState({order: response, orderItem: orderRes[0]});
+        this.setState({order: response});
       }
     } catch (e) {}
 
@@ -86,12 +83,6 @@ class OrderDetailScreen extends React.PureComponent {
         Chi tiết đơn hàng
       </Text>
     );
-  };
-
-  scrollToBottom = () => {
-    if (this.scrollView) {
-      this.scrollView.scrollToEnd();
-    }
   };
 
   renderHistoryItem = (history, index) => {
@@ -118,36 +109,19 @@ class OrderDetailScreen extends React.PureComponent {
   };
 
   render() {
-    let {
-      loading,
-      keyboardShown,
-      orderItem,
-      order,
-      history,
-      comment,
-    } = this.state;
+    let {loading, keyboardShown, order, history, comment} = this.state;
     const {profile} = this.props.profile;
-    const groups = Object.values(
-      lodash.groupBy(order, function(b) {
-        return b.product_id;
-      }),
-    );
     return (
       <View style={styles.container}>
         <Toolbar center={this.renderTitle()} left={<BackIcon />} />
         {loading ? (
           <LoadingIndicator />
         ) : (
-          <KeyboardAwareScrollView
-            ref={ref => (this.scrollView = ref)}
-            contentContainerStyle={[styles.content]}>
-            {lodash.isArray(groups) &&
-              groups.map((item, index) => (
-                <GroupItem key={index.toString()} item={item[0]} list={item} />
+          <KeyboardAwareScrollView contentContainerStyle={[styles.content]}>
+            {lodash.isArray(order) &&
+              order.map((item, index) => (
+                <OrderDetailItem item={item} key={`ORDER_ITEM_${index}`} />
               ))}
-            <Text style={styles.note}>
-              Ghi chú đơn hàng: {lodash.get(orderItem, 'comment')}
-            </Text>
             {Array.isArray(history) && (
               <>
                 <Text style={styles.history}>LỊCH SỬ THAY ĐỔI</Text>
@@ -208,22 +182,12 @@ class OrderDetailScreen extends React.PureComponent {
             </View>
           </View>
         )}
-        {lodash.isArray(order) && order.length > 3 && (
-          <TouchableIcon
-            style={styles.down}
-            onPress={this.scrollToBottom}
-            iconStyle={styles.arrow}
-            source={require('../../../res/icon/down-arrow-icon.png')}
-          />
-        )}
       </View>
     );
   }
 
   sendComment = async () => {
-    const {comment} = this.state;
-    let {orderId} = this.props.navigation.state.params;
-    const {profile} = this.props.profile;
+    const {comment, order} = this.state;
     if (validator.isEmpty(comment)) {
       return;
     }
@@ -231,11 +195,9 @@ class OrderDetailScreen extends React.PureComponent {
       sending: true,
     });
     try {
-      await Api.addCommentToOrder({comment, idOrder: orderId});
-      const orderRes = await Api.getOrderById(orderId, profile.type);
+      await Api.addCommentToOrder({comment, idOrder: order.id});
       this.setState({
         sending: false,
-        orderItem: orderRes[0],
         comment: text.emptyString,
       });
       Toast.show('Cập nhập ghi chú thành công.');
@@ -282,7 +244,6 @@ const styles = StyleSheet.create({
     height: sizeWidth(100),
     marginRight: sizeWidth(12),
     fontFamily: font.medium,
-    fontWeight: '500',
     borderWidth: 1,
     borderColor: appColor.blur,
     padding: sizeWidth(12),
@@ -298,7 +259,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: sizeWidth(12),
     marginVertical: sizeWidth(8),
     fontFamily: font.medium,
-    fontWeight: '500',
     color: appColor.primary,
   },
   text: {
@@ -308,26 +268,5 @@ const styles = StyleSheet.create({
   },
   html: {
     paddingHorizontal: sizeWidth(12),
-    marginVertical: sizeWidth(5),
-  },
-  down: {
-    position: 'absolute',
-    bottom: sizeWidth(64),
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: sizeWidth(44),
-    borderRadius: sizeWidth(22),
-    height: sizeWidth(44),
-    right: sizeWidth(16),
-    backgroundColor: appColor.primary,
-  },
-  arrow: {
-    width: sizeWidth(18),
-    height: sizeWidth(18),
-    tintColor: 'white',
-  },
-  note: {
-    marginVertical: sizeWidth(12),
-    marginHorizontal: sizeWidth(12),
   },
 });

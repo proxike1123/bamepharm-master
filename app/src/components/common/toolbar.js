@@ -8,8 +8,8 @@ import LinearGradient from 'react-native-linear-gradient';
 export default class Toolbar extends Component {
   static propTypes = {
     left: PropTypes.object,
-    center: PropTypes.object,
-    right: PropTypes.object,
+    //center: PropTypes.bool,
+    //right: PropTypes.bool,
   };
 
   render() {
@@ -18,7 +18,7 @@ export default class Toolbar extends Component {
       <View>
         <View style={styles.statusBar} />
         <LinearGradient
-          colors={['#F98649', '#F04E23']}
+          colors={[appColor.leftLinear, appColor.rightLinear]}
           start={{x: 0, y: 0}}
           end={{x: 1, y: 1}}
           style={styles.container}>

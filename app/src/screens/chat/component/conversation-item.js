@@ -11,7 +11,6 @@ import {connect} from 'react-redux';
 import firebase from 'react-native-firebase';
 import moment from 'moment';
 import {appConfig} from 'app/src/config/app.config';
-import {appColor} from '../../../constants/app.constant';
 
 class ConversationItem extends React.Component {
   constructor(props) {
@@ -20,7 +19,6 @@ class ConversationItem extends React.Component {
     this.state = {
       lastMessage: '',
       time: null,
-      hasUnread: false,
     };
   }
 
@@ -41,7 +39,6 @@ class ConversationItem extends React.Component {
           const data = querySnapshot._docs[0].data();
           this.setState({
             lastMessage: data.text,
-            hasUnread: data.user._id !== this.saleId && data.seen === false,
             time: moment
               .unix(data.createdAt.seconds)
               .format('HH:mm- ddd/DD/MMM'),
@@ -60,31 +57,27 @@ class ConversationItem extends React.Component {
 
   render() {
     const {agency} = this.props;
-    const {lastMessage, hasUnread, time} = this.state;
+    const {lastMessage, time} = this.state;
     return (
       <ButtonWrapper
         style={[styles.container, styleBase.row, styleBase.alignCenter]}
         onPress={this.onPress}>
         <AvatarChat avatar={`${appConfig.apiUrl}public/${agency.avatar}`} />
         <View style={[styleBase.container, styleBase.m_10_left]}>
-          <View style={[styleBase.row, styleBase.alignCenter, styles.row]}>
-            <Text
-              style={[
-                styleBase.text16,
-                styleBase.textBold,
-                styleBase.textGray29,
-                styles.name,
-              ]}>
-              {agency.full_name}
-            </Text>
-            {hasUnread && <View style={styles.unread} />}
-          </View>
+          <Text
+            style={[
+              styleBase.text16,
+              styleBase.textBold,
+              styleBase.textGray29,
+            ]}>
+            {agency.full_name}
+          </Text>
           {!!lastMessage && (
             <View style={[styleBase.row, styleBase.alignCenter]}>
               <Text
                 style={[
                   styleBase.container,
-                  !hasUnread && styleBase.textGrey,
+                  styleBase.textGrey,
                   styleBase.textRegular,
                   styleBase.text15,
                 ]}>
@@ -124,18 +117,4 @@ const styles = StyleSheet.create({
     paddingHorizontal: sizeWidth(15),
     paddingVertical: sizeWidth(8),
   },
-  unread: {
-    width: sizeWidth(8),
-    height: sizeWidth(8),
-    borderRadius: sizeWidth(4),
-    backgroundColor: appColor.primary,
-  },
-  name: {
-    flex: 1,
-    marginRight: sizeWidth(12),
-  },
-  row: {
-    marginBottom: sizeWidth(6),
-  },
-  bold: {},
 });

@@ -3,7 +3,7 @@ import {
   View,
   StyleSheet,
   FlatList,
-  TouchableWithoutFeedback,
+  ScrollView,
   TextInput,
   Keyboard,
   TouchableOpacity,
@@ -47,7 +47,7 @@ class OrderScreen extends Component {
       keyboardShown: false,
       selectedItem: null,
       selectedColor: 0,
-      comment: this.getComment(),
+      comment: text.emptyString,
       order: (colors || []).map(cl => ({
         color: cl,
         sizes: (sizes || []).map(sz => ({
@@ -90,24 +90,6 @@ class OrderScreen extends Component {
     this.keyboardDidHideListener.remove();
   };
 
-  getComment = () => {
-    const {cart} = this.props.cart;
-    if (lodash.isArray(cart)) {
-      let cartLocal = cart.slice();
-
-      const {product} = this.props.navigation.state.params;
-
-      if (!cartLocal || !Array.isArray(cartLocal)) return '';
-      let pro = cartLocal.find(item => item.id === product.id);
-
-      let products = (!!pro && pro.products) || {};
-      const item = Object.values(products)[0];
-      return item ? item.comment : '';
-    }
-
-    return '';
-  };
-
   getQuantity = (size, color) => {
     const {cart} = this.props.cart;
     if (lodash.isArray(cart)) {
@@ -119,6 +101,7 @@ class OrderScreen extends Component {
       let pro = cartLocal.find(item => item.id === product.id);
 
       let products = (!!pro && pro.products) || {};
+
       let quantity = Object.values(products).find(
         item => item.size == size && item.color_name == color,
       );
@@ -214,45 +197,41 @@ class OrderScreen extends Component {
       inputRange: [0, sizeWidth(400)],
       outputRange: [1, 0.4],
     });
+
     return (
       <View style={styles.container}>
         <ProductDetailToolbar title={'Thêm vào giỏ hàng'} />
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View>
-            <View style={styles.product}>
-              <View onLayout={this.onLayoutImage}>
-                <CacheImage
-                  style={styles.image}
-                  resizeMode="stretch"
-                  resizeMethod="resize"
-                  uri={imageFullpath(product.product[0].image, true)}
-                />
-              </View>
-              <View style={styles.info}>
-                <Text style={styles.name}>{product.product[0].name}</Text>
-                <Text style={styles.price}>
-                  {numeral(product.product[0].price).format('0,0')} VNĐ
-                </Text>
-              </View>
-            </View>
-
-            {this.renderColors()}
-          </View>
-        </TouchableWithoutFeedback>
-        <KeyboardAwareScrollView extraHeight={sizeWidth(200)}>
-          <View style={styles.line} />
-          <View style={styles.header}>
-            <Text style={styles.size}>Size</Text>
-            <Text style={styles.quantity}>SL</Text>
-          </View>
-          <View style={[styles.header, styleBase.p_5_vertical]}>
-            <Text style={styles.size}> </Text>
-            <NumberInput
-              onChangeText={this.handleChangeText}
-              onBlur={this.handleBlur}
-              value={this.state.quantityAll}
+        <View style={styles.product}>
+          <View onLayout={this.onLayoutImage}>
+            <CacheImage
+              style={styles.image}
+              resizeMode="stretch"
+              resizeMethod="resize"
+              uri={imageFullpath(product.product[0].image, true)}
             />
           </View>
+          <View style={styles.info}>
+            <Text style={styles.name}>{product.product[0].name}</Text>
+            <Text style={styles.price}>
+              {numeral(product.product[0].price).format('0,0')} VNĐ
+            </Text>
+          </View>
+        </View>
+        {this.renderColors()}
+        <View style={styles.line} />
+        <View style={styles.header}>
+          <Text style={styles.size}>Size</Text>
+          <Text style={styles.quantity}>SL</Text>
+        </View>
+        <View style={[styles.header, styleBase.p_5_vertical]}>
+          <Text style={styles.size}> </Text>
+          <NumberInput
+            onChangeText={this.handleChangeText}
+            onBlur={this.handleBlur}
+            value={this.state.quantityAll}
+          />
+        </View>
+        <KeyboardAwareScrollView>
           {((order[selectedColor] || {}).sizes || []).map((item, index) => (
             <OrderItem
               product={product}
@@ -262,6 +241,7 @@ class OrderScreen extends Component {
               onColorPress={() => this.showColorPicker(item)}
             />
           ))}
+
           <View style={styles.note}>
             <Text style={styles.label}>Ghi chú</Text>
             <View style={[styles.input_container]}>
@@ -450,16 +430,13 @@ const styles = StyleSheet.create({
   title: {
     color: 'white',
     fontFamily: font.bold,
-    fontWeight: 'bold',
     fontSize: sizeFont(18),
   },
   final: {
     fontFamily: font.bold,
-    fontWeight: 'bold',
   },
   sum: {
     fontFamily: font.bold,
-    fontWeight: 'bold',
     color: appColor.primary,
   },
   button: {
@@ -483,14 +460,12 @@ const styles = StyleSheet.create({
   },
   name: {
     fontFamily: font.bold,
-    fontWeight: 'bold',
     fontSize: sizeFont(18),
   },
   price: {
     color: appColor.primary,
     marginTop: sizeWidth(4),
     fontFamily: font.bold,
-    fontWeight: 'bold',
     fontSize: sizeFont(18),
   },
   add: {
@@ -509,7 +484,6 @@ const styles = StyleSheet.create({
   activeText: {
     fontSize: sizeFont(16),
     fontFamily: font.bold,
-    fontWeight: 'bold',
     color: appColor.primary,
   },
   size: {
@@ -542,7 +516,6 @@ const styles = StyleSheet.create({
   },
   label: {
     fontFamily: font.bold,
-    fontWeight: 'bold',
   },
   input_container: {
     borderWidth: 1,
@@ -557,7 +530,6 @@ const styles = StyleSheet.create({
     textAlignVertical: 'top',
     fontSize: sizeFont(15),
     fontFamily: font.medium,
-    fontWeight: '500',
     height: sizeWidth(120),
     paddingVertical: 0,
   },
