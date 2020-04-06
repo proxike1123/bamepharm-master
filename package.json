@@ -56,7 +56,7 @@
     "redux-saga": "^0.16.0",
     "uuid": "^3.3.3",
     "validator": "^10.2.0",
-    "yarn": "^1.21.1"
+    "yarn": "^1.22.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.2",
