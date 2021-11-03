@@ -55,7 +55,7 @@
     "redux": "^3.7.2",
     "redux-saga": "^0.16.0",
     "uuid": "^3.3.3",
-    "validator": "^10.2.0",
+    "validator": "^13.7.0",
     "yarn": "^1.21.1"
   },
   "devDependencies": {
